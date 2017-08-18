@@ -1,0 +1,34 @@
+{
+  "name": "@pager/minion",
+  "version": "1.0.0",
+  "description": "Microservice Framework for RabbitMQ Workers",
+  "main": "./lib/index.js",
+  "files": [
+    "bin",
+    "lib"
+  ],
+  "bin": {
+    "minion": "minion.js"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pagerinc/minion.git"
+  },
+  "keywords": [
+    "microservices",
+    "rabbitmq",
+    "workers"
+  ],
+  "author": "gmauricio.munoz@gmail.com, david.roncancio@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pagerinc/minion/issues"
+  },
+  "homepage": "https://github.com/pagerinc/minion#readme",
+  "dependencies": {
+    "@pager/jackrabbit": "^4.6.6"
+  }
+}
