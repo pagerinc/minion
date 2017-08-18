@@ -8,7 +8,7 @@
     "lib"
   ],
   "bin": {
-    "minion": "minion.js"
+    "minion": "./bin/minion.js"
   },
   "scripts": {
     "test": "jest"
