@@ -11,7 +11,7 @@
     "minion": "./bin/minion.js"
   },
   "scripts": {
-    "test": "ava"
+    "test": "nyc ava"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
     "joi": "^10.6.0"
   },
   "devDependencies": {
-    "ava": "^0.22.0"
+    "ava": "^0.22.0",
+    "nyc": "^11.1.0"
   }
 }
