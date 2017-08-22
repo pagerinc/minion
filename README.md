@@ -82,6 +82,20 @@ Check below for supported options and default values.
 - `deadLetterExchange` - By default all queues are created with a dead letter exchange. The name defaults to the name of the exchange following the `.dead` suffix. If you want to disable the dead letter exchange , set it as `false`.
 - `schema` - If a schema is defined, the payload of the message will be validated against it. If the validation fails, a nack will be sent with `requeue=false`. If not present the payload will always be valid. The schema is expected to be a [Joi](https://github.com/hapijs/joi) schema.
 
+### Programmatic use
+
+You can use Minion programmatically by requiring it directly, and passing options as the second argument:
+
+```js
+const minion = require('minion')
+
+minion((message, done) => {
+  done(null, 'Hello World')
+}, {
+  noAck: true
+})
+```
+
 ### Validation
 
 We use [joi](https://github.com/hapijs/joi) as default for payload schema validation. Just set the `schema` property for the handler with a valid Joi definition and the payload would be automatically validated:
@@ -105,20 +119,6 @@ minon((message, done) => {
   schema: {
      myKey: joi.string()
   }
-})
-```
-
-### Programmatic use
-
-You can use Minion programmatically by requiring it directly, and passing options as the second argument:
-
-```js
-const minion = require('minion')
-
-minion((message, done) => {
-  done(null, 'Hello World')
-}, {
-  noAck: true
 })
 ```
 
