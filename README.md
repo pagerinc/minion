@@ -1,6 +1,6 @@
-![Alt Text](https://media.giphy.com/media/BQAk13taTaKYw/giphy.gif)
+![Minion](https://68.media.tumblr.com/avatar_c972768606a9_128.png)
 
-**Minion** - _Microservice Framework for RabbitMQ Workers_
+**Minion**  —  _Microservice Framework for RabbitMQ Workers_
 
 ## Features
 
