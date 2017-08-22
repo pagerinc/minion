@@ -21,7 +21,7 @@ Create an index.js and export a function like this:
 
 ```javascript
 module.exports = (message, done) => {
-   done('Hello World')
+   done(null, 'Hello World')
 }
 ```
 
@@ -72,28 +72,53 @@ module.exports = handler
 
 Check below for supported options and default values.
 
-#### Consumer Options
-- `noAck` - Wheter acking is required for this worker. Defaults to false.
-
-#### Exchange Options
-
+#### Options
 - `exchangeType` - Defaults to 'topic'
-- `exchangeName` - Defautls to 'default'
-
-#### Queue Optios
+- `exchangeName` - Defautls to the name of the handler function.
+- `noAck` - Wheter acking is required for this worker. Defaults to false.
 - `key` - Key to bind the queue to. Defaults to service file name or queue name.
 - `exclusive` - Defaults to false.
 - `durable` - Defaults to true. 
-        
+- `deadLetterExchange` - By default all queues are created with a dead letter exchange. The name defaults to the name of the exchange following the `.dead` suffix. If you want to disable the dead letter exchange , set it as `false`.
+- `schema` - If a schema is defined, the payload of the message will be validated against it. If the validation fails, a nack will be sent with `requeue=false`. If not present the payload will always be valid. The schema is expected to be a [Joi](https://github.com/hapijs/joi) schema.
+
+### Validation
+
+We use [joi](https://github.com/hapijs/joi) as default for payload schema validation. Just set the `schema` property for the handler with a valid Joi definition and the payload would be automatically validated:
+
+```js
+const handler = (message, done) => {
+    done(null, true)
+}
+
+handler.schema = {
+    aKey: joi.string()
+}
+```
+
+If you're using it programmatically:
+
+```js
+minon((message, done) => {
+  done(null, 'Hello World')
+}, {
+  schema: {
+     myKey: joi.string()
+  }
+})
+```
+
 ### Programmatic use
 
-You can use Minion programmatically by requiring it directly:
+You can use Minion programmatically by requiring it directly, and passing options as the second argument:
 
 ```js
 const minion = require('minion')
 
-minon((message, done) => {
-  done('Hello World')
+minion((message, done) => {
+  done(null, 'Hello World')
+}, {
+  noAck: true
 })
 ```
 
@@ -103,6 +128,28 @@ The RabbitMQ connection URL is read from a `RABBIT_URL` env var, if not present 
 
 ## Error Handling
 
+TODO
 
 ## Testing
 
+When calling Minon programatically you receive an instance of a function you can use to inject messages directly.
+Assuming you're using [ava](https://github.com/sindresorhus/ava) for testing (as we do), you can test like this:
+
+Your service:
+```javascript
+const handler = (message, done) => {
+    done(null, true)
+}
+```
+
+Your test:
+```javascript
+test('acks message with true', async t => {
+    const service = minion(handler)
+    const message = {hello: 'world'}
+
+    service(message, (res) => {
+        t.true(res)
+    })
+})
+```
