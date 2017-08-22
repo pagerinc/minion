@@ -1,8 +1,11 @@
-# minion
-Microservice Framework for RabbitMQ Workers
+![Alt Text](https://media.giphy.com/media/BQAk13taTaKYw/giphy.gif)
+
+**Minion** - _Microservice Framework for RabbitMQ Workers_
 
 ## Features
 
+ - Easy and Minimalistic setup
+ - Simple to use and configure
 
 ## Usage
 
