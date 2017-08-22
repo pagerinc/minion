@@ -29,7 +29,8 @@
   },
   "homepage": "https://github.com/pagerinc/minion#readme",
   "dependencies": {
-    "@pager/jackrabbit": "^4.6.6"
+    "@pager/jackrabbit": "^4.6.6",
+    "joi": "^10.6.0"
   },
   "devDependencies": {
     "ava": "^0.22.0"
