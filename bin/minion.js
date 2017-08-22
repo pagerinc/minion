@@ -2,7 +2,7 @@
 
 const { resolve, extname, parse } = require('path')
 const fs = require('fs')
-const nano = require('../lib')
+const minion = require('../lib')
 
 let path, modules
 
@@ -45,5 +45,5 @@ modules.forEach((mod) => {
   // TODO recursive directories for names ie. triage.create
   Object.defineProperty(handler, 'name', { value: handler.queue || parse(mod).name });
 
-  nano(require(resolve(process.cwd(), mod)))
+  const service = minion(require(resolve(process.cwd(), mod)))
 })

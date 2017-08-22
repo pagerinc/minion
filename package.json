@@ -11,7 +11,7 @@
     "minion": "./bin/minion.js"
   },
   "scripts": {
-    "test": "jest"
+    "test": "ava"
   },
   "repository": {
     "type": "git",
@@ -30,5 +30,8 @@
   "homepage": "https://github.com/pagerinc/minion#readme",
   "dependencies": {
     "@pager/jackrabbit": "^4.6.6"
+  },
+  "devDependencies": {
+    "ava": "^0.22.0"
   }
 }
