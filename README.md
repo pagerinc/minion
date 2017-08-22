@@ -98,7 +98,7 @@ minion((message, done) => {
 
 ### Validation
 
-We use [joi](https://github.com/hapijs/joi) as default for payload schema validation. Just set the `schema` property for the handler with a valid Joi definition and the payload would be automatically validated:
+We use [joi](https://github.com/hapijs/joi) as default for payload validation. Just set the `schema` property for the handler with a valid Joi definition and the payload will be automatically validated:
 
 ```js
 const handler = (message, done) => {
@@ -113,7 +113,7 @@ handler.schema = {
 If you're using it programmatically:
 
 ```js
-minon((message, done) => {
+minion((message, done) => {
   done(null, 'Hello World')
 }, {
   schema: {
@@ -132,7 +132,7 @@ TODO
 
 ## Testing
 
-When calling Minon programatically you receive an instance of a function you can use to inject messages directly.
+When calling Minion programatically you receive an instance of a function you can use to inject messages directly.
 Assuming you're using [ava](https://github.com/sindresorhus/ava) for testing (as we do), you can test like this:
 
 Your service:
