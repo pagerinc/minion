@@ -6,6 +6,7 @@
 
  - Easy and Minimalistic setup
  - Simple to use and configure
+ - Designed to use with sync functions aswell as promises or async/await ones
 
 ## Usage
 
@@ -20,8 +21,8 @@ npm install --save minion
 Create an index.js and export a function like this:
 
 ```javascript
-module.exports = (message, done) => {
-   done(null, 'Hello World')
+module.exports = (message) => {
+   return 'Hello World'
 }
 ```
 
@@ -60,8 +61,8 @@ Instead of pointing to a single file on the package.json `main` property, set it
 You can change default worker configuration by setting properties on your handler like this:
 
 ```javascript
-const handler = (message, done) => {
-  done('Hello World')
+const handler = (message) => {
+  return 'Hello World'
 }
 
 handler.noAck = true
@@ -78,7 +79,7 @@ Check below for supported options and default values.
 - `noAck` - Wheter acking is required for this worker. Defaults to false.
 - `key` - Key to bind the queue to. Defaults to service file name or queue name.
 - `exclusive` - Defaults to false.
-- `durable` - Defaults to true. 
+- `durable` - Defaults to true.
 - `deadLetterExchange` - By default all queues are created with a dead letter exchange. The name defaults to the name of the exchange following the `.dead` suffix. If you want to disable the dead letter exchange , set it as `false`.
 - `schema` - If a schema is defined, the payload of the message will be validated against it. If the validation fails, a nack will be sent with `requeue=false`. If not present the payload will always be valid. The schema is expected to be a [Joi](https://github.com/hapijs/joi) schema.
 
@@ -89,10 +90,20 @@ You can use Minion programmatically by requiring it directly, and passing option
 ```js
 const minion = require('minion')
 
-minion((message, done) => {
-  done(null, 'Hello World')
+minion((message) => {
+  return 'Hello World'
 }, {
   noAck: true
+})
+```
+
+With async / await support
+
+```js
+const minion = require('minion')
+
+minion(async (message) => {
+  return await request('https://foo.bar.zz')
 })
 ```
 
@@ -101,8 +112,8 @@ minion((message, done) => {
 We use [joi](https://github.com/hapijs/joi) as default for payload validation. Just set the `schema` property for the handler with a valid Joi definition and the payload will be automatically validated:
 
 ```js
-const handler = (message, done) => {
-    done(null, true)
+const handler = (message) => {
+    return true
 }
 
 handler.schema = {
@@ -113,8 +124,8 @@ handler.schema = {
 If you're using it programmatically:
 
 ```js
-minion((message, done) => {
-  done(null, 'Hello World')
+minion((message) => {
+  return 'Hello World'
 }, {
   schema: {
      myKey: joi.string()
@@ -128,7 +139,18 @@ The RabbitMQ connection URL is read from a `RABBIT_URL` env var, if not present 
 
 ## Error Handling
 
-TODO
+If the handler throws an error the message will be nacked and not requeued (`{ requeue: false }`), if you want to requeue on failure
+minion provider a custom error to do so
+
+Your service:
+```js
+const minion = require('../lib')
+const Requeue = minion.Requeue
+
+const handler = async (message) => {
+    throw new Requeue('My message')
+};
+```
 
 ## Testing
 
@@ -137,8 +159,8 @@ Assuming you're using [ava](https://github.com/sindresorhus/ava) for testing (as
 
 Your service:
 ```javascript
-const handler = (message, done) => {
-    done(null, true)
+const handler = (message) => {
+    return true
 }
 ```
 
@@ -148,8 +170,7 @@ test('acks message with true', async t => {
     const service = minion(handler)
     const message = {hello: 'world'}
 
-    service(message, (res) => {
-        t.true(res)
-    })
+    const res = await service(message)
+    t.true(res)
 })
 ```
