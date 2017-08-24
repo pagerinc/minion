@@ -29,11 +29,11 @@
   },
   "homepage": "https://github.com/pagerinc/minion#readme",
   "dependencies": {
-    "@pager/jackrabbit": "^4.6.6",
-    "joi": "^10.6.0"
+    "@pager/jackrabbit": "4.6.x",
+    "joi": "10.6.x"
   },
   "devDependencies": {
-    "ava": "^0.22.0",
-    "nyc": "^11.1.0"
+    "ava": "0.22.x",
+    "nyc": "11.1.x"
   }
 }
