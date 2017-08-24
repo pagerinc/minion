@@ -66,7 +66,7 @@ const handler = (message) => {
 }
 
 handler.noAck = true
-hadler.queue = 'message.example.key'
+handler.queue = 'message.example.key'
 
 module.exports = handler
 ```
