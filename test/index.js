@@ -65,27 +65,3 @@ test('nack with requeue', async t => {
         t.is(error.message, 'My message')
     }
 })
-
-
-test('nack if schema validation does not pass', async t => {
-    const handler = (message) => {
-        return true
-    }
-
-    handler.schema = {
-        aKey: joi.string()
-    }
-
-    const service = minion(handler)
-    const message = {hola: 'mundo'}
-
-    t.plan(2)
-
-    try {
-        await service(message)
-        t.fail('should not ack when validation fails')
-    } catch (error) {
-        t.true(error.isJoi)
-        t.is(error.name, 'ValidationError')
-    }
-})

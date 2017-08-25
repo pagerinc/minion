@@ -30,7 +30,6 @@
   "homepage": "https://github.com/pagerinc/minion#readme",
   "dependencies": {
     "@pager/jackrabbit": "4.6.x",
-    "joi": "10.6.x",
     "mri": "^1.1.0"
   },
   "devDependencies": {

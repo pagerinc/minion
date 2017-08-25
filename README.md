@@ -125,15 +125,17 @@ Hello World
 
 ### Configuration
 
-You can change default worker configuration by setting properties on your handler like this:
+You can change default worker configuration by adding a setting property as an object with configuration values like this:
 
 ```javascript
 const handler = (message) => {
   return 'Hello World'
 }
 
-handler.noAck = true
-hadler.queue = 'message.example.key'
+handler.settings = {
+  key: 'message.example.key',
+  name: 'message.queue'
+}
 
 module.exports = handler
 ```
@@ -141,14 +143,13 @@ module.exports = handler
 Check below for supported options and default values.
 
 #### Options
+- `name`- Queue name. Defaults to handler function or file name
 - `exchangeType` - Defaults to 'topic'
 - `exchangeName` - Defautls to the name of the handler function.
-- `noAck` - Wheter acking is required for this worker. Defaults to false.
 - `key` - Key to bind the queue to. Defaults to service file name or queue name.
 - `exclusive` - Defaults to false.
 - `durable` - Defaults to true.
 - `deadLetterExchange` - By default all queues are created with a dead letter exchange. The name defaults to the name of the exchange following the `.dead` suffix. If you want to disable the dead letter exchange , set it as `false`.
-- `schema` - If a schema is defined, the payload of the message will be validated against it. If the validation fails, a nack will be sent with `requeue=false`. If not present the payload will always be valid. The schema is expected to be a [Joi](https://github.com/hapijs/joi) schema.
 
 ### Programmatic use
 
@@ -176,29 +177,7 @@ minion(async (message) => {
 
 ### Validation
 
-We use [joi](https://github.com/hapijs/joi) as default for payload validation. Just set the `schema` property for the handler with a valid Joi definition and the payload will be automatically validated:
-
-```js
-const handler = (message) => {
-    return true
-}
-
-handler.schema = {
-    aKey: joi.string()
-}
-```
-
-If you're using it programmatically:
-
-```js
-minion((message) => {
-  return 'Hello World'
-}, {
-  schema: {
-     myKey: joi.string()
-  }
-})
-```
+We recommend using [minion-joi](https://github.com/pagerinc/minion-joi) or writing your own validation following that as an example.
 
 ## Environment Configuration
 
