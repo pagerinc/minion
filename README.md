@@ -37,11 +37,6 @@ Ensure that the `main` property inside `package.json` points to your microservic
 }
 ```
 
-Once this is done, start the worker:
-
-```bash
-npm start
-```
 
 ### Multiple handlers
 
@@ -54,6 +49,78 @@ Instead of pointing to a single file on the package.json `main` property, set it
     "start": "minion"
   }
 }
+```
+
+
+### Running Options
+
+
+Once the project is done, start the worker:
+
+```bash
+npm start
+```
+
+Optionally you can configure a default exchange name or exchange type when launching
+minion, if not set the exchange name will be the same of the service, and the type of
+the exchange will be `topic`
+
+**Exchange Type**
+
+```json
+{
+  "main": "lib",
+  "scripts": {
+    "start": "minion -t fanout"
+  }
+}
+```
+
+**Exchange Name**
+
+```json
+{
+  "main": "lib",
+  "scripts": {
+    "start": "minion -x myExchange"
+  }
+}
+```
+
+### Debug Mode
+
+Minion provides a debug mode to test services via node repl
+
+```json
+{
+  "main": "myService.js",
+  "scripts": {
+    "debug": "minion -i"
+  }
+}
+```
+
+```bash
+npm run debug
+```
+
+This will launch an interactive console where you can debug existing services or use minion itself
+
+```bash
+▶ npm run debug
+> Ready to process myService
+> services.myService.publish({ test: 'message'})
+```
+
+Within the console you have acces to `services` thats a list of existing services, each service have
+a publish method that you can use to test the service, you can also access minion itself to test new services
+
+```
+> const hello = (message) => { console.log(`Hello ${message}`) }
+> const service = minion(hello)
+> service.publish('World')
+> Processing "World" routed with key hello
+Hello World
 ```
 
 ### Configuration
@@ -151,6 +218,8 @@ const handler = async (message) => {
     throw new Requeue('My message')
 };
 ```
+
+Also errors will be logged to `stderr` when thrown
 
 ## Testing
 

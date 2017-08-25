@@ -3,6 +3,23 @@
 const { resolve, extname, parse } = require('path')
 const fs = require('fs')
 const minion = require('../lib')
+const repl = require('repl')
+
+const parseArgs = require('mri')
+
+const flags = parseArgs(process.argv.slice(2), {
+  default: {
+  },
+  alias: {
+    x: 'exchangeName',
+    t: 'exchangeType',
+    i: 'interactive'
+  },
+  unknown(flag) {
+    console.log(`The option "${flag}" is unknown. Use one of these: exchange / type`)
+    process.exit(1)
+  }
+})
 
 let path, modules
 
@@ -39,11 +56,18 @@ if(!modules.length) {
   process.exit(1)
 }
 
-modules.forEach((mod) => {
+const services = modules.reduce((services, mod) => {
   const handler = require(resolve(process.cwd(), mod))
 
   // TODO recursive directories for names ie. triage.create
   Object.defineProperty(handler, 'name', { value: handler.queue || parse(mod).name });
 
-  const service = minion(require(resolve(process.cwd(), mod)))
-})
+  services[handler.name] = minion(handler, flags)
+  return services
+}, {})
+
+if (flags.interactive) {
+  const minionRepl = repl.start('> ')
+  minionRepl.context.services = services
+  minionRepl.context.minion = minion
+}
