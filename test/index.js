@@ -65,3 +65,42 @@ test('nack with requeue', async t => {
         t.is(error.message, 'My message')
     }
 })
+
+test.cb('publisher only', t => {
+
+    const myMessage = 'test message';
+
+    const myHandler = async (message) => {
+        t.is(message, myMessage)
+        t.pass();
+		t.end();
+    };
+
+    const service = minion(myHandler, { key: 'test.minion'})
+
+    service.on('ready', () => {
+
+        const publish = minion({ name: 'myHandler' })
+        publish(myMessage, 'test.minion')
+    })
+})
+
+
+test.cb('publisher with default Key', t => {
+
+        const myMessage = 'test message';
+
+        const myHandler = async (message) => {
+            t.is(message, myMessage)
+            t.pass();
+            t.end();
+        };
+
+        const service = minion(myHandler)
+
+        service.on('ready', () => {
+
+            const publish = minion({ name: 'myHandler' })
+            publish(myMessage)
+        })
+    })

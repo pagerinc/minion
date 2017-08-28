@@ -11,7 +11,7 @@
     "minion": "./bin/minion.js"
   },
   "scripts": {
-    "test": "nyc ava"
+    "test": "nyc ava --timeout=2m"
   },
   "repository": {
     "type": "git",

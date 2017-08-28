@@ -153,7 +153,9 @@ Check below for supported options and default values.
 
 ### Programmatic use
 
-You can use Minion programmatically by requiring it directly, and passing options as the second argument:
+## As a Service
+
+You can create Minion services programmatically by requiring it directly, and passing a handler as the first argument and options as the second argument:
 
 ```js
 const minion = require('minion')
@@ -161,7 +163,7 @@ const minion = require('minion')
 minion((message) => {
   return 'Hello World'
 }, {
-  noAck: true
+  key: 'my.routing.key'
 })
 ```
 
@@ -173,6 +175,32 @@ const minion = require('minion')
 minion(async (message) => {
   return await request('https://foo.bar.zz')
 })
+```
+
+## As a publisher
+
+You can create a Minion publisher programmatically by requiring it directly, and passing options as the first argument:
+
+```js
+const minion = require('minion')
+
+const publish = minion()
+
+publish({ hello: 'world' }, 'a.routing.key')
+```
+
+You can also test your services by publishing directly to them
+
+```js
+const minion = require('minion')
+
+const service = minion((message) => {
+  return 'Hello World'
+}, {
+  key: 'my.routing.key'
+})
+
+service.publish({ hola: 'mundo' })
 ```
 
 ### Validation
