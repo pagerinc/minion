@@ -149,6 +149,7 @@ Check below for supported options and default values.
 - `key` - Key to bind the queue to. Defaults to service file name or queue name.
 - `exclusive` - Defaults to false.
 - `durable` - Defaults to true.
+- `autoDelete` - Defaults to false.
 - `deadLetterExchange` - By default all queues are created with a dead letter exchange. The name defaults to the name of the exchange following the `.dead` suffix. If you want to disable the dead letter exchange , set it as `false`.
 
 ### Programmatic use
