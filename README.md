@@ -151,6 +151,7 @@ Check below for supported options and default values.
 - `durable` - Defaults to true.
 - `autoDelete` - Defaults to false.
 - `deadLetterExchange` - By default all queues are created with a dead letter exchange. The name defaults to the name of the exchange following the `.dead` suffix. If you want to disable the dead letter exchange , set it as `false`.
+- `logger` - Defaults to Bunyan logger, but can receive a custom logger
 
 ### Programmatic use
 

@@ -3,13 +3,15 @@ const joi = require('Joi')
 const minion = require('../lib')
 const Requeue = minion.Requeue
 
+const bunyan = require('bunyan');
+
 test('acks simple handler', async t => {
     const handler = (message) => {
       return true
     }
 
     const service = minion(handler)
-    const message = {hola: 'mundo'}
+    const message = { hola: 'mundo' }
 
     const res = await service(message)
     t.true(res)
@@ -22,7 +24,7 @@ test('acks async handler', async t => {
     };
 
     const service = minion(handler)
-    const message = {hola: 'mundo'}
+    const message = { hola: 'mundo' }
 
     const res = await service(message)
     t.true(res)
@@ -34,7 +36,7 @@ test('nack without requeue', async t => {
     };
 
     const service = minion(handler)
-    const message = {hola: 'mundo'}
+    const message = { hola: 'mundo' }
 
     t.plan(2)
 
@@ -53,7 +55,7 @@ test('nack with requeue', async t => {
     };
 
     const service = minion(handler)
-    const message = {hola: 'mundo'}
+    const message = { hola: 'mundo' }
 
     t.plan(2)
 
@@ -76,7 +78,7 @@ test.cb('publisher only', t => {
 		t.end();
     };
 
-    const service = minion(myHandler, { key: 'test.minion'})
+    const service = minion(myHandler, { key: 'test.minion' })
 
     service.on('ready', () => {
 
@@ -88,19 +90,37 @@ test.cb('publisher only', t => {
 
 test.cb('publisher with default Key', t => {
 
-        const myMessage = 'test message';
+    const myMessage = 'test message';
 
-        const myHandler = async (message) => {
-            t.is(message, myMessage)
-            t.pass();
-            t.end();
-        };
+    const myHandler = async (message) => {
+        t.is(message, myMessage)
+        t.pass();
+        t.end();
+    };
 
-        const service = minion(myHandler)
+    const service = minion(myHandler)
 
-        service.on('ready', () => {
+    service.on('ready', () => {
 
-            const publish = minion({ name: 'myHandler' })
-            publish(myMessage)
-        })
+        const publish = minion({ name: 'myHandler' })
+        publish(myMessage)
     })
+})
+
+test('custom logger', async t => {
+
+    const handler = (message) => {
+        return true
+    }
+
+    const myLogger = bunyan.createLogger({ name: 'myTestLogger' })
+
+    const service = minion(handler, { logger: myLogger })
+
+    t.is(service.logger, myLogger)
+
+    const message = { hola: 'mundo' }
+
+    const res = await service(message)
+    t.true(res)
+})
