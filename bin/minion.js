@@ -61,7 +61,7 @@ const services = modules.reduce((services, mod) => {
   const handler = require(resolve(process.cwd(), mod))
 
   // TODO recursive directories for names ie. triage.create
-  Object.defineProperty(handler, 'name', { value: handler.queue || parse(mod).name });
+  Object.defineProperty(handler, 'name', { value: handler.queue || parse(mod).name })
 
   services[handler.name] = minion(handler, flags)
   return services

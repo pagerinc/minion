@@ -225,7 +225,7 @@ const Requeue = minion.Requeue
 
 const handler = async (message) => {
     throw new Requeue('My message')
-};
+}
 ```
 
 Also errors will be logged to `stderr` when thrown

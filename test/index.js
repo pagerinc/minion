@@ -3,7 +3,7 @@ const joi = require('Joi')
 const minion = require('../lib')
 const Requeue = minion.Requeue
 
-const bunyan = require('bunyan');
+const bunyan = require('bunyan')
 
 test('acks simple handler', async t => {
     const handler = (message) => {
@@ -20,8 +20,8 @@ test('acks simple handler', async t => {
 
 test('acks async handler', async t => {
     const handler = async (message) => {
-        return Promise.resolve(true);
-    };
+        return Promise.resolve(true)
+    }
 
     const service = minion(handler)
     const message = { hola: 'mundo' }
@@ -33,50 +33,48 @@ test('acks async handler', async t => {
 test('nack without requeue', async t => {
     const handler = async (message) => {
         throw new Error('My message')
-    };
+    }
 
     const service = minion(handler)
     const message = { hola: 'mundo' }
 
-    t.plan(2)
+    t.plan(1)
 
     try {
         await service(message)
-        t.fail('should not ack when validation fails')
+        t.fail('should not ack when error occur')
     } catch (error) {
-        t.falsy(error.requeue)
         t.is(error.message, 'My message')
     }
 })
 
 test('nack with requeue', async t => {
     const handler = async (message) => {
-        throw new Requeue('My message')
-    };
+        throw new Error('My message')
+    }
 
-    const service = minion(handler)
+    const service = minion(handler, { requeue: true })
     const message = { hola: 'mundo' }
 
-    t.plan(2)
+    t.plan(1)
 
     try {
         await service(message)
-        t.fail('should not ack when validation fails')
+        t.fail('should not ack when error occur')
     } catch (error) {
-        t.true(error.requeue)
         t.is(error.message, 'My message')
     }
 })
 
 test.cb('publisher only', t => {
 
-    const myMessage = 'test message';
+    const myMessage = 'test message'
 
     const myHandler = async (message) => {
         t.is(message, myMessage)
-        t.pass();
-		t.end();
-    };
+        t.pass()
+		t.end()
+    }
 
     const service = minion(myHandler, { key: 'test.minion' })
 
@@ -90,13 +88,13 @@ test.cb('publisher only', t => {
 
 test.cb('publisher with default Key', t => {
 
-    const myMessage = 'test message';
+    const myMessage = 'test message'
 
     const myHandler = async (message) => {
         t.is(message, myMessage)
-        t.pass();
-        t.end();
-    };
+        t.pass()
+        t.end()
+    }
 
     const service = minion(myHandler)
 
