@@ -4,7 +4,7 @@
 
 ## Features
 
- - Easy and Minimalistic setup
+ - Easy and Minionmalistic setup
  - Simple to use and configure
  - Designed to use with sync functions aswell as promises or async/await ones
 
