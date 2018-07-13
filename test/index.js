@@ -1,9 +1,6 @@
 const test = require('ava')
-const joi = require('Joi')
 const minion = require('../lib')
 const Requeue = minion.Requeue
-
-const bunyan = require('bunyan')
 
 test('acks simple handler', async t => {
     const handler = (message) => {
@@ -103,22 +100,4 @@ test.cb('publisher with default Key', t => {
         const publish = minion({ name: 'myHandler' })
         publish(myMessage)
     })
-})
-
-test('custom logger', async t => {
-
-    const handler = (message) => {
-        return true
-    }
-
-    const myLogger = bunyan.createLogger({ name: 'myTestLogger' })
-
-    const service = minion(handler, { logger: myLogger })
-
-    t.is(service.logger, myLogger)
-
-    const message = { hola: 'mundo' }
-
-    const res = await service(message)
-    t.true(res)
 })
