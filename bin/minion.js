@@ -3,7 +3,6 @@
 const { resolve, extname, parse } = require('path')
 const fs = require('fs')
 const minion = require('../lib')
-const logger = minion.logger
 const repl = require('repl')
 
 const parseArgs = require('mri')
@@ -17,7 +16,7 @@ const flags = parseArgs(process.argv.slice(2), {
     i: 'interactive'
   },
   unknown(flag) {
-    logger.info(`The option "${flag}" is unknown. Use one of these: exchange / type`)
+    console.log(`The option "${flag}" is unknown. Use one of these: exchange / type`)
     process.exit(1)
   }
 })
@@ -29,7 +28,7 @@ try {
     path = packageJson.main || 'index.js'
 } catch (err) {
   if (err.code !== 'MODULE_NOT_FOUND') {
-    logger.error(
+    console.error(
       `Could not read \`package.json\`: ${err.message}`,
       'invalid-package-json'
     )
@@ -38,7 +37,7 @@ try {
 }
 
 if (!fs.existsSync(path)) {
-  logger.error(
+  console.error(
     `Could not read \`${path}\``,
     'invalid-path'
   )
@@ -50,7 +49,7 @@ modules = stats.isDirectory() ? fs.readdirSync(path).map((file) => `${path}/${fi
 modules = modules.filter((mod) => extname(mod) === '.js')
 
 if(!modules.length) {
-  logger.error(
+  console.error(
     `No modules avaliable at \`${path}\``,
     'no-modules'
   )
