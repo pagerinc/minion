@@ -1,9 +1,6 @@
 const test = require('ava')
-const joi = require('Joi')
 const minion = require('../lib')
 const Requeue = minion.Requeue
-
-const bunyan = require('bunyan')
 
 test('acks simple handler', async t => {
     const handler = (message) => {
@@ -13,7 +10,7 @@ test('acks simple handler', async t => {
     const service = minion(handler)
     const message = { hola: 'mundo' }
 
-    const res = await service(message)
+    const res = await service.handle(message)
     t.true(res)
 })
 
@@ -26,7 +23,7 @@ test('acks async handler', async t => {
     const service = minion(handler)
     const message = { hola: 'mundo' }
 
-    const res = await service(message)
+    const res = await service.handle(message)
     t.true(res)
 })
 
@@ -41,7 +38,7 @@ test('nack without requeue', async t => {
     t.plan(1)
 
     try {
-        await service(message)
+        await service.handle(message)
         t.fail('should not ack when error occur')
     } catch (error) {
         t.is(error.message, 'My message')
@@ -59,7 +56,7 @@ test('nack with requeue', async t => {
     t.plan(1)
 
     try {
-        await service(message)
+        await service.handle(message)
         t.fail('should not ack when error occur')
     } catch (error) {
         t.is(error.message, 'My message')
@@ -103,22 +100,4 @@ test.cb('publisher with default Key', t => {
         const publish = minion({ name: 'myHandler' })
         publish(myMessage)
     })
-})
-
-test('custom logger', async t => {
-
-    const handler = (message) => {
-        return true
-    }
-
-    const myLogger = bunyan.createLogger({ name: 'myTestLogger' })
-
-    const service = minion(handler, { logger: myLogger })
-
-    t.is(service.logger, myLogger)
-
-    const message = { hola: 'mundo' }
-
-    const res = await service(message)
-    t.true(res)
 })
