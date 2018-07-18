@@ -248,7 +248,7 @@ test('acks message with true', async t => {
     const service = minion(handler)
     const message = {hello: 'world'}
 
-    const res = await service(message)
+    const res = await service.handle(message)
     t.true(res)
 })
 ```
