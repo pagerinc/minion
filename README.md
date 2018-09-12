@@ -151,7 +151,9 @@ Check below for supported options and default values.
 - `durable` - Defaults to true.
 - `autoDelete` - Defaults to false.
 - `deadLetterExchange` - By default all queues are created with a dead letter exchange. The name defaults to the name of the exchange following the `.dead` suffix. If you want to disable the dead letter exchange , set it as `false`.
-- `logger` - Defaults to Bunyan logger, but can receive a custom logger
+- `logger` - Defaults to Bunyan logger, but can receive a custom logger.
+- `rabbitUrl` - (Optional) RabbitMQ connection URL string. Defaults to 'amqp://localhost'.
+- `rabbit` - (Optional) Jackrabbit connection instance, in case you want to build your own. Make sure to use this if you want the connection to be shared amongst several minions.
 
 ### Programmatic use
 
