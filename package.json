@@ -35,6 +35,6 @@
   },
   "devDependencies": {
     "ava": "0.x.x",
-    "nyc": "13.x.x"
+    "nyc": "14.x"
   }
 }
