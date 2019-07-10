@@ -1,6 +1,5 @@
 const test = require('ava')
 const minion = require('../lib')
-const Requeue = minion.Requeue
 
 test('acks simple handler', async t => {
     const handler = (message) => {
