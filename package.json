@@ -34,7 +34,7 @@
     "mri": "1.x.x"
   },
   "devDependencies": {
-    "ava": "0.x.x",
-    "nyc": "13.x.x"
+    "ava": "^2.2.0",
+    "nyc": "^14.1.1"
   }
 }
