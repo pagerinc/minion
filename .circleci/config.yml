@@ -43,7 +43,7 @@ workflows:
       - test:
           filters:
             tags:
-              only: /.*/
+              only: /^v.*/
       - deploy:
           requires:
             - test
