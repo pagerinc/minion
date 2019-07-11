@@ -8,6 +8,8 @@ defaults: &defaults
 jobs:
   test:
     <<: *defaults
+    environment:
+      MOCK_RABBIT: true
     steps:
       - checkout
 
@@ -18,7 +20,7 @@ jobs:
       - run: npm install
       - run:
           name: Run tests
-          command: MOCK_RABBIT=true npm test
+          command: npm test
 
       - persist_to_workspace:
           root: ~/repo
