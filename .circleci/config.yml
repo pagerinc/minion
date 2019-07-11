@@ -8,6 +8,8 @@ defaults: &defaults
 jobs:
   test:
     <<: *defaults
+    environment:
+      MOCK_RABBIT: true
     steps:
       - checkout
 
