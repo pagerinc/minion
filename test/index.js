@@ -45,6 +45,32 @@ test('acks simple handler', async t => {
     t.true(res)
 })
 
+test('acks simple handler with metadata', async t => {
+    const handler = (message, meta) => {
+      return meta
+    }
+
+    const service = minion(handler, internals.settings)
+    const message = { hola: 'mundo' }
+
+    const res = await service.handle(message, 'i am meta')
+    t.is(res, 'i am meta')
+})
+
+test('emmitter emits message', async t => {
+    const handler = () => true
+
+    const service = minion(handler, internals.settings)
+    
+    service.on('message', (message, meta) => {
+        t.is(message, 'i am message')
+        t.is(meta, 'i am meta')
+    })
+
+    await service.handle('i am message', 'i am meta')
+
+    t.plan(2)
+})
 
 test('acks async handler', async t => {
     const handler = async (message) => {
