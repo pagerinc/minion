@@ -16,7 +16,6 @@ jobs:
       - restore_cache:
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: npm audit
       - run: npm install
       - run:
           name: Run tests
