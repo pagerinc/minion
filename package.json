@@ -31,7 +31,7 @@
   "dependencies": {
     "@pager/jackrabbit": "4.x",
     "debug": "4.x",
-    "mri": "1.x.x"
+    "mri": "1.x"
   },
   "devDependencies": {
     "ava": "2.x",
