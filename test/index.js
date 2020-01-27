@@ -1,4 +1,5 @@
 const test = require('ava')
+const jackrabbit = require('@pager/jackrabbit')
 const minion = require('../lib')
 const { EventEmitter } = require('events')
 
@@ -43,6 +44,33 @@ test('acks simple handler', async t => {
 
     const res = await service.handle(message)
     t.true(res)
+})
+
+test('uses injected exchange', async t => {
+
+    // TODO: remove me once rabbit integration testing is setup
+    //  since this test relies on confirming internal aspects of jackrabbit/amqp setup
+    if (internals.mockRabbit) {
+        t.pass();
+        return;
+    }
+
+    const rabbit = jackrabbit(process.env.RABBIT_URL || 'amqp://127.0.0.1');
+    const exchange = rabbit['topic']('test');
+
+    const service = minion(() => true, { ...internals.settings, rabbit, exchange })
+
+    await new Promise((resolve) => {
+        service.on('ready', resolve);
+    })
+
+    const message = { hola: 'mundo' }
+    const res = await service.handle(message)
+    t.true(res)
+    t.is(rabbit, service.connection)
+
+    // 3 channels: default heartbeat, exchange, and service queue
+    t.is(service.connection.getInternals().connection.connection.channels.length, 3)
 })
 
 test('acks simple handler with metadata', async t => {
