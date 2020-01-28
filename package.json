@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/pagerinc/minion#readme",
   "dependencies": {
-    "@pager/jackrabbit": "4.x",
+    "@pager/jackrabbit": "5.x",
     "debug": "4.x",
     "mri": "1.x"
   },
