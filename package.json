@@ -22,7 +22,7 @@
     "rabbitmq",
     "workers"
   ],
-  "author": "gmauricio.munoz@gmail.com, david.roncancio@gmail.com",
+  "author": "Pager Engineering <engineering@pager.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/pagerinc/minion/issues"
@@ -36,5 +36,13 @@
   "devDependencies": {
     "ava": "3.x",
     "nyc": "15.x"
+  },
+  "renovate": {
+    "extends": [
+      "github>pagerinc/renovate-config"
+    ],
+    "lockFileMaintenance": {
+      "enabled": false
+    }
   }
 }
