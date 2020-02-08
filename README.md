@@ -13,7 +13,7 @@
 install `minion`:
 
 ```bash
-npm install --save minion
+npm install --save @pager/minion
 ```
 
 ### Single handler
@@ -162,7 +162,7 @@ Check below for supported options and default values.
 You can create Minion services programmatically by requiring it directly, and passing a handler as the first argument and options as the second argument:
 
 ```js
-const minion = require('minion')
+const minion = require('@pager/minion')
 
 minion((message) => {
   return 'Hello World'
@@ -174,7 +174,7 @@ minion((message) => {
 With async / await support
 
 ```js
-const minion = require('minion')
+const minion = require('@pager/minion')
 
 minion(async (message) => {
   return await request('https://foo.bar.zz')
@@ -186,7 +186,7 @@ minion(async (message) => {
 You can create a Minion publisher programmatically by requiring it directly, and passing options as the first argument:
 
 ```js
-const minion = require('minion')
+const minion = require('@pager/minion')
 
 const publish = minion()
 
@@ -196,7 +196,7 @@ publish({ hello: 'world' }, 'a.routing.key')
 You can also test your services by publishing directly to them
 
 ```js
-const minion = require('minion')
+const minion = require('@pager/minion')
 
 const service = minion((message) => {
   return 'Hello World'
@@ -222,7 +222,7 @@ minion provider a custom error to do so
 
 Your service:
 ```js
-const minion = require('../lib')
+const minion = require('@pager/minion')
 const Requeue = minion.Requeue
 
 const handler = async (message) => {
