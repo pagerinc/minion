@@ -34,8 +34,10 @@
     "mri": "1.x"
   },
   "devDependencies": {
+    "@pager/semantic-release-config": "1.x",
     "ava": "3.x",
-    "nyc": "15.x"
+    "nyc": "15.x",
+    "semantic-release": "17.x"
   },
   "renovate": {
     "extends": [
@@ -44,5 +46,8 @@
     "lockFileMaintenance": {
       "enabled": false
     }
+  },
+  "release": {
+    "extends": "@pager/semantic-release-config"
   }
 }
