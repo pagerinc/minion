@@ -1,3 +1,10 @@
+## [3.4.6](https://github.com/pagerinc/minion/compare/v3.4.5...v3.4.6) (2020-03-16)
+
+
+### Bug Fixes
+
+* consume on queue bound ([#168](https://github.com/pagerinc/minion/issues/168)) ([b9da0fb](https://github.com/pagerinc/minion/commit/b9da0fb75a39225ecb987361fadbb78a871a98eb))
+
 ## [3.4.5](https://github.com/pagerinc/minion/compare/v3.4.4...v3.4.5) (2020-03-09)
 
 ## [3.4.4](https://github.com/pagerinc/minion/compare/v3.4.3...v3.4.4) (2020-03-07)
