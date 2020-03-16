@@ -29,7 +29,7 @@ test.beforeEach(t => {
         exchange.queue = () => queue
         internals.settings.rabbit = { topic: () => exchange }
         internals.settings.connect = () => {
-            queue.emit('connected')
+            queue.emit('bound')
         }
     }
 });
