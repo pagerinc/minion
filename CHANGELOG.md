@@ -1,3 +1,10 @@
+## [3.4.7](https://github.com/pagerinc/minion/compare/v3.4.6...v3.4.7) (2020-03-19)
+
+
+### Bug Fixes
+
+* don't create extra unused const and unref timer ([#171](https://github.com/pagerinc/minion/issues/171)) ([2851948](https://github.com/pagerinc/minion/commit/2851948d82b7950bd560b169e4ae9597c6c691fb))
+
 ## [3.4.6](https://github.com/pagerinc/minion/compare/v3.4.5...v3.4.6) (2020-03-16)
 
 
