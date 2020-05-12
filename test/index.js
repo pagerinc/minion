@@ -168,7 +168,6 @@ test.cb('publisher only', t => {
 
     service.on('response', (response) => {
         t.is(response, myMessage)
-        t.pass()
         t.end()
     });
 
@@ -196,7 +195,6 @@ test.cb('publisher with default Key', t => {
 
     service.on('response', (response) => {
         t.is(response, myMessage)
-        t.pass()
         t.end()
     });
 
@@ -214,7 +212,6 @@ test.cb('handles rejections', t => {
     service.on('error', (error) => {
 
         t.is(error, 'Error processing event')
-        t.pass()
         t.end()
     });
 
@@ -246,7 +243,6 @@ test.cb('handles exceptions', t => {
 
     service.on('error', (error) => {
         t.is(error.message, 'Error processing event')
-        t.pass()
         t.end()
     });
 
@@ -275,7 +271,6 @@ test.cb('it times out', t => {
 
     service.on('error', (error) => {
         t.is(error.message, 'Ack timeout')
-        t.pass()
         t.end()
     });
 
