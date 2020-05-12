@@ -233,7 +233,7 @@ test.cb('handles rejections', t => {
 test.cb('handles exceptions', t => {
 
     const myMessage = 'event';
-    const myHandler = async (message) => {
+    const myHandler = (message) => {
         throw new Error(`Error processing ${message}`)
     };
     const service = minion(myHandler, internals.settings)
