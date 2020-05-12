@@ -1,3 +1,5 @@
+'use strict';
+
 const test = require('ava')
 const jackrabbit = require('@pager/jackrabbit')
 const minion = require('../lib')
@@ -89,7 +91,7 @@ test('emmitter emits message', async t => {
     const handler = () => true
 
     const service = minion(handler, internals.settings)
-    
+
     service.on('message', (message, meta) => {
         t.is(message, 'i am message')
         t.is(meta, 'i am meta')
@@ -153,9 +155,7 @@ test.cb('publisher only', t => {
     const myMessage = 'test message'
 
     const myHandler = async (message) => {
-        t.is(message, myMessage)
-        t.pass()
-		t.end()
+        return message;
     }
 
     const service = minion(myHandler, { ...internals.settings, key: 'test.minion' })
@@ -166,20 +166,24 @@ test.cb('publisher only', t => {
         publish(myMessage, 'test.minion')
     })
 
+    service.on('response', (response) => {
+        t.is(response, myMessage)
+        t.pass()
+        t.end()
+    });
+
     if (internals.mockRabbit) {
         internals.settings.connect();
     }
-})
 
+})
 
 test.cb('publisher with default Key', t => {
 
     const myMessage = 'test message'
 
     const myHandler = async (message) => {
-        t.is(message, myMessage)
-        t.pass()
-        t.end()
+        return message;
     }
 
     const service = minion(myHandler, internals.settings)
@@ -189,6 +193,91 @@ test.cb('publisher with default Key', t => {
         const publish = minion({ name: 'myHandler' }, internals.settings)
         publish(myMessage)
     })
+
+    service.on('response', (response) => {
+        t.is(response, myMessage)
+        t.pass()
+        t.end()
+    });
+
+    if (internals.mockRabbit) {
+        internals.settings.connect();
+    }
+})
+
+test.cb('handles rejections', t => {
+
+    const myMessage = 'event';
+    const myHandler = (message) => Promise.reject(`Error processing ${message}`);
+    const service = minion(myHandler, internals.settings);
+
+    service.on('error', (error) => {
+
+        t.is(error, 'Error processing event')
+        t.pass()
+        t.end()
+    });
+
+    service.on('ready', () => {
+
+        const publish = minion({ name: 'myHandler' }, internals.settings)
+        publish(myMessage)
+    })
+
+    if (internals.mockRabbit) {
+        internals.settings.connect();
+    }
+
+})
+
+test.cb('handles exceptions', t => {
+
+    const myMessage = 'event';
+    const myHandler = async (message) => {
+        throw new Error(`Error processing ${message}`)
+    };
+    const service = minion(myHandler, internals.settings)
+
+    service.on('ready', () => {
+
+        const publish = minion({ name: 'myHandler' }, internals.settings)
+        publish(myMessage)
+    })
+
+    service.on('error', (error) => {
+        t.is(error.message, 'Error processing event')
+        t.pass()
+        t.end()
+    });
+
+    if (internals.mockRabbit) {
+        internals.settings.connect();
+    }
+})
+
+test.cb('it times out', t => {
+
+    const myMessage = 'test message'
+
+    const myHandler = (message) => {
+        return new Promise((resolve) => {
+            setTimeout(() => resolve(message), 2000);
+        });
+    }
+
+    const service = minion(myHandler, { ...internals.settings, timeout: 1000 })
+
+    service.on('ready', () => {
+
+        const publish = minion({ name: 'myHandler' }, internals.settings)
+        publish(myMessage)
+    })
+
+    service.on('error', (error) => {
+        t.is(error.message, 'Ack timeout')
+        t.pass()
+        t.end()
+    });
 
     if (internals.mockRabbit) {
         internals.settings.connect();
