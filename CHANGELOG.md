@@ -1,3 +1,10 @@
+## [3.4.8](https://github.com/pagerinc/minion/compare/v3.4.7...v3.4.8) (2020-05-13)
+
+
+### Bug Fixes
+
+* handler errors ([#190](https://github.com/pagerinc/minion/issues/190)) ([d04734d](https://github.com/pagerinc/minion/commit/d04734d60d3186e0dadf68222ffff3955849a12f))
+
 ## [3.4.7](https://github.com/pagerinc/minion/compare/v3.4.6...v3.4.7) (2020-03-19)
 
 
