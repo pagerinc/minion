@@ -220,7 +220,7 @@ test.serial('handles rejections', async t => {
 test.serial('handles exceptions', async t => {
 
     const myMessage = 'event';
-    const myHandler = async (message) => {
+    const myHandler = (message) => {
         throw new Error(`Error processing ${message}`)
     };
     const service = minion(myHandler, internals.settings);
@@ -244,7 +244,6 @@ test.serial('handles exceptions', async t => {
 test.serial('it times out', async t => {
 
     const myMessage = 'test message'
-
     const myHandler = (message) => {
         return new Promise((resolve) => {
             setTimeout(() => resolve(message), 10);
