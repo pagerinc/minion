@@ -1,3 +1,5 @@
+'use strict';
+
 const test = require('ava')
 const jackrabbit = require('@pager/jackrabbit')
 const minion = require('../lib')
@@ -89,7 +91,7 @@ test('emmitter emits message', async t => {
     const handler = () => true
 
     const service = minion(handler, internals.settings)
-    
+
     service.on('message', (message, meta) => {
         t.is(message, 'i am message')
         t.is(meta, 'i am meta')
@@ -148,49 +150,119 @@ test('nack with requeue', async t => {
     }
 })
 
-test.cb('publisher only', t => {
+test.serial('publisher only', async t => {
 
     const myMessage = 'test message'
-
-    const myHandler = async (message) => {
-        t.is(message, myMessage)
-        t.pass()
-		t.end()
-    }
-
+    const myHandler = (message) => `Processed: ${message}`;
     const service = minion(myHandler, { ...internals.settings, key: 'test.minion' })
 
-    service.on('ready', () => {
-
-        const publish = minion({ name: 'myHandler' }, internals.settings);
-        publish(myMessage, 'test.minion')
-    })
+    const ready = new Promise((resolve) => service.on('ready', resolve));
+    const responsePromise = new Promise((resolve) => service.on('response', resolve));
 
     if (internals.mockRabbit) {
         internals.settings.connect();
     }
+
+    await ready;
+
+    const publish = minion({ name: 'myHandler' }, internals.settings)
+    publish(myMessage, 'test.minion');
+
+    const response = await responsePromise;
+
+    t.is(response, myHandler(myMessage))
 })
 
-
-test.cb('publisher with default Key', t => {
+test.serial('publisher with default Key', async t => {
 
     const myMessage = 'test message'
-
-    const myHandler = async (message) => {
-        t.is(message, myMessage)
-        t.pass()
-        t.end()
-    }
-
-    const service = minion(myHandler, internals.settings)
-
-    service.on('ready', () => {
-
-        const publish = minion({ name: 'myHandler' }, internals.settings)
-        publish(myMessage)
-    })
+    const myHandler = (message) => `Processed: ${message}`;
+    const service = minion(myHandler, internals.settings);
+    const ready = new Promise((resolve) => service.on('ready', resolve));
+    const responsePromise = new Promise((resolve) => service.on('response', resolve));
 
     if (internals.mockRabbit) {
         internals.settings.connect();
     }
+
+    await ready;
+
+    const publish = minion({ name: 'myHandler' }, internals.settings)
+    publish(myMessage)
+
+    const response = await responsePromise;
+
+    t.is(response, myHandler(myMessage))
+})
+
+test.serial('handles rejections', async t => {
+
+    const myMessage = 'event';
+    const myHandler = (message) => Promise.reject(`Error processing ${message}`);
+    const service = minion(myHandler, internals.settings);
+    const ready = new Promise((resolve) => service.on('ready', resolve));
+    const errorPromise = new Promise((resolve) => service.on('error', resolve));
+
+    if (internals.mockRabbit) {
+        internals.settings.connect();
+    }
+
+    await ready;
+
+    const publish = minion({ name: 'myHandler' }, internals.settings)
+    publish(myMessage)
+
+    const error = await errorPromise;
+
+    t.is(error, 'Error processing event');
+})
+
+test.serial('handles exceptions', async t => {
+
+    const myMessage = 'event';
+    const myHandler = (message) => {
+        throw new Error(`Error processing ${message}`)
+    };
+    const service = minion(myHandler, internals.settings);
+    const ready = new Promise((resolve) => service.on('ready', resolve));
+    const errorPromise = new Promise((resolve) => service.on('error', resolve));
+
+    if (internals.mockRabbit) {
+        internals.settings.connect();
+    }
+
+    await ready;
+
+    const publish = minion({ name: 'myHandler' }, internals.settings)
+    publish(myMessage)
+
+    const error = await errorPromise;
+
+    t.is(error.message, 'Error processing event');
+})
+
+test.serial('it times out', async t => {
+
+    const myMessage = 'test message'
+    const myHandler = (message) => {
+        return new Promise((resolve) => {
+            setTimeout(() => resolve(message), 10);
+        });
+    }
+    const service = minion(myHandler, { ...internals.settings, timeout: 5 });
+    const ready = new Promise((resolve) => service.on('ready', resolve));
+    const errorPromise = new Promise((resolve) => service.on('error', resolve));
+
+    if (internals.mockRabbit) {
+        internals.settings.connect();
+    }
+
+    await ready;
+
+    const publish = minion({ name: 'myHandler' }, internals.settings)
+    publish(myMessage)
+
+    const error = await errorPromise;
+
+    t.is(error.message, 'Ack timeout')
 })
