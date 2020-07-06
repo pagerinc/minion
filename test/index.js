@@ -236,7 +236,7 @@ describe('Minion', () => {
 
         const error = await errorPromise;
 
-        expect(error).to.be.equal('Error processing event');
+        expect(error).to.be.error('Error processing event')
     });
 
     it('handles exceptions', async () => {
@@ -261,7 +261,7 @@ describe('Minion', () => {
 
         const error = await errorPromise;
 
-        expect(error.message).to.be.equal('Error processing event');
+        expect(error).to.be.error('Error processing event');
     });
 
     it('it times out', async () => {
@@ -290,6 +290,6 @@ describe('Minion', () => {
 
         const error = await errorPromise;
 
-        expect(error.message).to.be.equal('Ack timeout')
+        expect(error).to.be.error('Ack timeout')
     });
 });
