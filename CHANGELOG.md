@@ -1,3 +1,10 @@
+## [3.5.1](https://github.com/pagerinc/minion/compare/v3.5.0...v3.5.1) (2020-07-06)
+
+
+### Bug Fixes
+
+* add debugging info to error ([#206](https://github.com/pagerinc/minion/issues/206)) ([fe52fdc](https://github.com/pagerinc/minion/commit/fe52fdc7e409597bba9dd80e9b18d0777b52beca))
+
 # [3.5.0](https://github.com/pagerinc/minion/compare/v3.4.8...v3.5.0) (2020-07-06)
 
 
