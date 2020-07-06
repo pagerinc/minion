@@ -11,7 +11,7 @@
     "minion": "./bin/minion.js"
   },
   "scripts": {
-    "test": "nyc ava --timeout=10s"
+    "test": "lab"
   },
   "repository": {
     "type": "git",
@@ -34,9 +34,9 @@
     "mri": "1.x"
   },
   "devDependencies": {
+    "@hapi/code": "8.x",
+    "@hapi/lab": "22.x",
     "@pager/semantic-release-config": "1.x",
-    "ava": "3.x",
-    "nyc": "15.x",
     "semantic-release": "17.x"
   },
   "renovate": {
