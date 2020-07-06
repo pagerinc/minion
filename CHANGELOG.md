@@ -1,3 +1,10 @@
+# [3.5.0](https://github.com/pagerinc/minion/compare/v3.4.8...v3.5.0) (2020-07-06)
+
+
+### Features
+
+* update test suite from ava/nyc to lab ([#205](https://github.com/pagerinc/minion/issues/205)) ([0a7fde0](https://github.com/pagerinc/minion/commit/0a7fde0196f9b9fc8e19b6a7f15cc29910b3ec2b))
+
 ## [3.4.8](https://github.com/pagerinc/minion/compare/v3.4.7...v3.4.8) (2020-05-13)
 
 
