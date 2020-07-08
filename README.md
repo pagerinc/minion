@@ -217,20 +217,19 @@ The RabbitMQ connection URL is read from a `RABBIT_URL` env var, if not present 
 
 ## Error Handling
 
-If the handler throws an error the message will be nacked and not requeued (`{ requeue: false }`), if you want to requeue on failure
-minion provider a custom error to do so
+If the handler throws an error the message will be nacked and requeued according to the options passed, if you want to 
+force requeue a specific message, a custom error field will tell Minion to do so.
 
 Your service:
 ```js
-const minion = require('@pager/minion')
-const Requeue = minion.Requeue
-
 const handler = async (message) => {
-    throw new Requeue('My message')
+    const error = new Error('Not reay, requeue')
+    error.requeue = true 
+    throw error
 }
 ```
 
-Also errors will be logged to `stderr` when thrown
+When not requeuing, errors will be logged to `stderr` when thrown, when requeueing will be logged to `stdout` warn level.
 
 ## Testing
 
