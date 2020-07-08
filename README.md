@@ -223,13 +223,13 @@ force requeue a specific message, a custom error field will tell Minion to do so
 Your service:
 ```js
 const handler = async (message) => {
-    const error = new Error('Not reay, requeue')
+    const error = new Error('Not ready, requeue')
     error.requeue = true 
     throw error
 }
 ```
 
-When not requeuing, errors will be logged to `stderr` when thrown, when requeueing will be logged to `stdout` warn level.
+When not requeuing, errors will be logged to `stderr` when thrown, when requeuing will be logged to `stdout` warn level.
 
 ## Testing
 
