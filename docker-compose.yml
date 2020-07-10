@@ -1,0 +1,7 @@
+version: "3.7"
+services:
+  rabbitmq:
+    image: rabbitmq:3.8.5-management-alpine@sha256:838b97c09077d3091782bbe0c86acc80f126df36cb0dc5d10f6efb9f74d1f954
+    ports:
+      - "5672:5672"
+      - "15672:15672"
