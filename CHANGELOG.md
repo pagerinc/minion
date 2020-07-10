@@ -1,3 +1,10 @@
+# [3.6.0](https://github.com/pagerinc/minion/compare/v3.5.1...v3.6.0) (2020-07-10)
+
+
+### Features
+
+* support circleci rabbit service ([#212](https://github.com/pagerinc/minion/issues/212)) ([818b283](https://github.com/pagerinc/minion/commit/818b2834eac51ff0d3a5f7421ad3e34660896ab9))
+
 ## [3.5.1](https://github.com/pagerinc/minion/compare/v3.5.0...v3.5.1) (2020-07-06)
 
 
