@@ -35,9 +35,8 @@
   },
   "devDependencies": {
     "@hapi/code": "8.x",
-    "@hapi/eslint-config-hapi": "13.x",
-    "@hapi/eslint-plugin-hapi": "4.x",
     "@hapi/lab": "22.x",
+    "@pager/eslint-config": "1.x",
     "@pager/semantic-release-config": "1.x",
     "eslint": "7.x",
     "eslint-plugin-import": "2.x",
