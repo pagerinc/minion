@@ -1,3 +1,10 @@
+## [3.6.1](https://github.com/pagerinc/minion/compare/v3.6.0...v3.6.1) (2020-07-10)
+
+
+### Bug Fixes
+
+* apply pager eslint-config ([#213](https://github.com/pagerinc/minion/issues/213)) ([ee25c01](https://github.com/pagerinc/minion/commit/ee25c0115747d5fcddf41ce6672d0eed191c1b04))
+
 # [3.6.0](https://github.com/pagerinc/minion/compare/v3.5.1...v3.6.0) (2020-07-10)
 
 
