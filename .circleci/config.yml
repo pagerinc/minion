@@ -4,12 +4,11 @@ defaults: &defaults
   working_directory: ~/repo
   docker:
     - image: circleci/node:12.18@sha256:593036575617990e30e7e8f36831c4498f29db411d0f673995d20dfef6e69f0d
+    - image: rabbitmq:3.8.5-management-alpine@sha256:838b97c09077d3091782bbe0c86acc80f126df36cb0dc5d10f6efb9f74d1f954
 
 jobs:
   test:
     <<: *defaults
-    environment:
-      MOCK_RABBIT: true
     steps:
       - checkout
 
@@ -23,7 +22,8 @@ jobs:
 
       - persist_to_workspace:
           root: ~/repo
-          paths: .
+          paths:
+            - .
 
   deploy:
     <<: *defaults
