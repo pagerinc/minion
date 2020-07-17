@@ -280,28 +280,4 @@ describe('Minion', () => {
         const error = await errorPromise;
         expect(error).to.be.error(`Error processing ${myMessage}`);
     });
-
-    it('it times out', async ({ context }) => {
-
-        const myMessage = 'test message';
-        const timeoutHandler = (message) => {
-
-            return new Promise((resolve) => {
-
-                setTimeout(() => resolve(message), 10);
-            });
-        };
-
-        const service = Minion(timeoutHandler, { ...context, timeout: 5 });
-        const ready = new Promise((resolve) => service.once('ready', resolve));
-        const errorPromise = new Promise((resolve) => service.once('error', resolve));
-
-        await ready;
-
-        const publish = Minion({ name: 'timeoutHandler' }, context);
-        publish(myMessage);
-
-        const error = await errorPromise;
-        expect(error).to.be.error('Ack timeout');
-    });
 });
