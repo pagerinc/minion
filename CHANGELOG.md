@@ -1,3 +1,10 @@
+## [3.6.2](https://github.com/pagerinc/minion/compare/v3.6.1...v3.6.2) (2020-07-17)
+
+
+### Bug Fixes
+
+* remove timeout exception ([#221](https://github.com/pagerinc/minion/issues/221)) ([39a56c8](https://github.com/pagerinc/minion/commit/39a56c82660652a21e8e4bfbfbd80d333ce80df4))
+
 ## [3.6.1](https://github.com/pagerinc/minion/compare/v3.6.0...v3.6.1) (2020-07-10)
 
 
