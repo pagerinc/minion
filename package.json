@@ -34,13 +34,13 @@
     "mri": "1.x"
   },
   "devDependencies": {
-    "@hapi/code": "8.x",
-    "@hapi/lab": "22.x",
-    "@pager/eslint-config": "1.x",
-    "@pager/semantic-release-config": "1.x",
-    "eslint": "7.x",
-    "eslint-plugin-import": "2.x",
-    "semantic-release": "17.x"
+    "@hapi/code": "8.0.1",
+    "@hapi/lab": "22.0.4",
+    "@pager/eslint-config": "1.1.1",
+    "@pager/semantic-release-config": "1.3.0",
+    "eslint": "7.5.0",
+    "eslint-plugin-import": "2.22.0",
+    "semantic-release": "17.1.1"
   },
   "renovate": {
     "extends": [
