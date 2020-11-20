@@ -183,7 +183,7 @@ minion(async (message) => {
 
 ## As a publisher
 
-You can create a Minion publisher programmatically by requiring it directly, and passing options as the first argument:
+You can create a Minion publisher programmatically by requiring it directly, and passing options as the first argument and an optional properties object:
 
 ```js
 const minion = require('@pager/minion')
@@ -191,6 +191,14 @@ const minion = require('@pager/minion')
 const publish = minion()
 
 publish({ hello: 'world' }, 'a.routing.key')
+```
+
+```js
+const minion = require('@pager/minion')
+
+const publish = minion()
+
+publish({ hello: 'world' }, 'a.routing.key', { expiration: 6000 })
 ```
 
 You can also test your services by publishing directly to them
