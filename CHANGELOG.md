@@ -1,3 +1,10 @@
+# [3.7.0](https://github.com/pagerinc/minion/compare/v3.6.2...v3.7.0) (2020-11-20)
+
+
+### Features
+
+* Allow to pass extra properties when message is published. ([#366](https://github.com/pagerinc/minion/issues/366)) ([3185f6f](https://github.com/pagerinc/minion/commit/3185f6fc95fe511deaf02133c7b6ff148d276dce))
+
 ## [3.6.2](https://github.com/pagerinc/minion/compare/v3.6.1...v3.6.2) (2020-07-17)
 
 

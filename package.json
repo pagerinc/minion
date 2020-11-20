@@ -1,6 +1,6 @@
 {
   "name": "@pager/minion",
-  "version": "3.6.2",
+  "version": "3.7.0",
   "description": "Microservice Framework for RabbitMQ Workers",
   "main": "./lib/index.js",
   "files": [
