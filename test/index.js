@@ -35,6 +35,7 @@ describe('Minion', () => {
         await context.rabbit.close();
     });
 
+
     it('should wait for start command', async () => {
 
         const handler = () => true;
@@ -238,6 +239,40 @@ describe('Minion', () => {
 
         const publish = Minion({ name: 'myHandler' }, context);
         publish(myMessage);
+
+        const response = await responsePromise;
+        expect(response).to.be.equal(myHandler(myMessage));
+    });
+
+    it('publisher only with properties', async ({ context }) => {
+
+        const myMessage = 'test message';
+        const myHandler = (message) => `Processed: ${message}`;
+        const service = Minion(myHandler, { ...context, key: 'test.minion' });
+        const ready = new Promise((resolve) => service.once('ready', resolve));
+        const responsePromise = new Promise((resolve) => service.once('response', resolve));
+
+        await ready;
+
+        const publish = Minion({ name: 'myHandler' }, context);
+        publish(myMessage, 'test.minion', { expiration: 60000 });
+
+        const response = await responsePromise;
+        expect(response).to.be.equal(myHandler(myMessage));
+    });
+
+    it('publisher with default key and properties', async ({ context }) => {
+
+        const myMessage = 'test message';
+        const myHandler = (message) => `Processed: ${message}`;
+        const service = Minion(myHandler, context);
+        const ready = new Promise((resolve) => service.once('ready', resolve));
+        const responsePromise = new Promise((resolve) => service.once('response', resolve));
+
+        await ready;
+
+        const publish = Minion({ name: 'myHandler' }, context);
+        publish(myMessage, null, { expiration: 60000 });
 
         const response = await responsePromise;
         expect(response).to.be.equal(myHandler(myMessage));
