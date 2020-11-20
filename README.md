@@ -198,7 +198,8 @@ const minion = require('@pager/minion')
 
 const publish = minion()
 
-publish({ hello: 'world' }, 'a.routing.key', { expiration: 6000 })
+// adding an object with a property to give to the message a time-to-live of 60 seconds.
+publish({ hello: 'world' }, 'a.routing.key', { expiration: 60000 })
 ```
 
 You can also test your services by publishing directly to them
