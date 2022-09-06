@@ -1,3 +1,10 @@
+# [3.8.0](https://github.com/pagerinc/minion/compare/v3.7.0...v3.8.0) (2022-09-06)
+
+
+### Features
+
+* **ENG-6067:** Add additional queue option ([#507](https://github.com/pagerinc/minion/issues/507)) ([7d38a7a](https://github.com/pagerinc/minion/commit/7d38a7a22b016a1c8b6a758e2c2b3a3fd596ab90))
+
 # [3.7.0](https://github.com/pagerinc/minion/compare/v3.6.2...v3.7.0) (2020-11-20)
 
 
