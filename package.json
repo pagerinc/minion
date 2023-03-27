@@ -40,7 +40,7 @@
     "@pager/semantic-release-config": "2.x",
     "eslint": "8.x",
     "eslint-plugin-import": "2.x",
-    "semantic-release": "19.x"
+    "semantic-release": "21.x"
   },
   "renovate": {
     "extends": [
