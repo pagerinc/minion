@@ -10,6 +10,8 @@ const lab = exports.lab = Lab.script();
 const { expect, fail } = Code;
 const { afterEach, beforeEach, describe, it } = lab;
 
+const rabbitUrl = process.env.RABBIT_URL || 'amqp://127.0.0.1';
+
 const waitForEvent = (eventEmitter, eventName) => {
 
     return new Promise((resolve, reject) => {
@@ -26,7 +28,7 @@ describe('Minion', () => {
 
     beforeEach(async ({ context }) => {
 
-        context.rabbit = Jackrabbit(process.env.RABBIT_URL || 'amqp://127.0.0.1');
+        context.rabbit = Jackrabbit(rabbitUrl);
         await waitForEvent(context.rabbit, 'connected');
     });
 
@@ -34,7 +36,6 @@ describe('Minion', () => {
 
         await context.rabbit.close();
     });
-
 
     it('should wait for start command', async () => {
 
@@ -67,7 +68,7 @@ describe('Minion', () => {
     it('acks simple handler without rabbit setting', async () => {
 
         const handler = () => true;
-        const service = Minion(handler, { rabbitUrl: 'amqp://127.0.0.1' });
+        const service = Minion(handler, { rabbitUrl });
         const ready = new Promise((resolve) => service.once('ready', resolve));
         const message = { hola: 'mundo' };
 
@@ -76,6 +77,7 @@ describe('Minion', () => {
         const res = await service.handle(message);
         expect(res).to.be.true();
     });
+
 
     it('acks simple handler', async ({ context }) => {
 

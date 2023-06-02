@@ -1,0 +1,52 @@
+steps:
+  - id: docker-compose
+    name: docker/compose:alpine-1.29.1
+    args: ['up', '-d']
+    waitFor: ['-']
+
+  - id: npm-install
+    name: node:18
+    secretEnv: ['NPM_TOKEN']
+    entrypoint: npm
+    args: ['i', '--quiet', '--package-lock-only']
+    waitFor: ['-']
+
+  - id: npm-ci
+    name: node:18
+    secretEnv: ['NPM_TOKEN']
+    entrypoint: npm
+    args: ['ci', '--quiet']
+    waitFor: ['npm-install']
+
+  - id: test-unit
+    name: node:18
+    entrypoint: npm
+    args: ['test']
+    env:
+      - 'NODE_ENV=test'
+      - 'RABBIT_URL=amqp://rabbitmq:5672'
+    waitFor: ['npm-ci', 'docker-compose']
+
+  - id: npm-publish
+    name: 'gcr.io/$PROJECT_ID/cloudbuilders/npm:6.13.4'
+    secretEnv: ['NPM_TOKEN']
+    env:
+      - 'TAG_NAME=$TAG_NAME'
+      - '_PR_NUMBER=$_PR_NUMBER'
+
+timeout: 10m
+
+logsBucket: 'gs://$PROJECT_ID-primary-cloudbuild-logs'
+
+tags:
+  - 'backend'
+  - 'npm'
+  - 'nodejs'
+
+secrets:
+  - kmsKeyName: projects/production-197117/locations/global/keyRings/gcb/cryptoKeys/main
+    secretEnv:
+      NPM_TOKEN: 'CiUA/4lqmXwRPPaGHe+X7TS7mwqARNCw5QFq7yfq7ESHaJrf+tzeElEADvOwrLQvnxCLG2wy+H2vD+DWHMosEgIfzpKNBJAVHX1u4FSwIF5utaN6tMIrLuZB18HnK2SKpsXTPvB/+0Eoz1acnj6WO+slz+GUGUnxefU='
+
+options:
+  machineType: E2_HIGHCPU_8
