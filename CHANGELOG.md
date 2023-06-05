@@ -1,3 +1,10 @@
+## [3.8.1](https://github.com/pagerinc/minion/compare/v3.8.0...v3.8.1) (2023-06-05)
+
+
+### Bug Fixes
+
+* add type definition ([#527](https://github.com/pagerinc/minion/issues/527)) ([55293a2](https://github.com/pagerinc/minion/commit/55293a2e02e3c562d35136ed7313667efdf19d29))
+
 # [3.8.0](https://github.com/pagerinc/minion/compare/v3.7.0...v3.8.0) (2022-09-06)
 
 
