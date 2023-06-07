@@ -1,8 +1,12 @@
 'use strict';
 
+const Crypto = require('crypto');
+
 const Code = require('@hapi/code');
 const Lab = require('@hapi/lab');
 const Jackrabbit = require('@pager/jackrabbit');
+const Sinon = require('sinon');
+const { faker: Faker } = require('@faker-js/faker');
 
 const Minion = require('../lib');
 
@@ -30,11 +34,18 @@ describe('Minion', () => {
 
         context.rabbit = Jackrabbit(rabbitUrl);
         await waitForEvent(context.rabbit, 'connected');
+
+        context.logger = {
+            child: Sinon.stub()
+        };
+
+        context.randomUUIdStub = Sinon.stub(Crypto, 'randomUUID');
     });
 
     afterEach(async ({ context }) => {
 
         await context.rabbit.close();
+        context.randomUUIdStub.restore();
     });
 
     it('should wait for start command', async () => {
@@ -214,11 +225,17 @@ describe('Minion', () => {
 
     it('publisher only', async ({ context }) => {
 
+        const key = 'test.minion';
+
         const myMessage = 'test message';
         const myHandler = (message) => `Processed: ${message}`;
-        const service = Minion(myHandler, { ...context, key: 'test.minion' });
+        const service = Minion(myHandler, { ...context, key });
         const ready = new Promise((resolve) => service.once('ready', resolve));
         const responsePromise = new Promise((resolve) => service.once('response', resolve));
+
+        const eventId = Faker.string.uuid();
+
+        context.randomUUIdStub.returns(eventId);
 
         await ready;
 
@@ -227,6 +244,8 @@ describe('Minion', () => {
 
         const response = await responsePromise;
         expect(response).to.be.equal(myHandler(myMessage));
+
+        Sinon.assert.calledWith(context.logger.child, { minion: { eventId, routingKey: key, messageId: undefined } });
     });
 
     it('publisher with default key', async ({ context }) => {
@@ -317,4 +336,32 @@ describe('Minion', () => {
         const error = await errorPromise;
         expect(error).to.be.error(`Error processing ${myMessage}`);
     });
+
+    it('handels message without logger', async ({ context }) => {
+
+        delete context.logger;
+
+        const key = 'test.minion';
+
+        const myMessage = 'test message';
+        const myHandler = (message) => `Processed: ${message}`;
+        const service = Minion(myHandler, { ...context, key });
+        const ready = new Promise((resolve) => service.once('ready', resolve));
+        const responsePromise = new Promise((resolve) => service.once('response', resolve));
+
+        const eventId = Faker.string.uuid();
+
+        context.randomUUIdStub.returns(eventId);
+
+        await ready;
+
+        const publish = Minion({ name: 'myHandler' }, context);
+        publish(myMessage, 'test.minion');
+
+        const response = await responsePromise;
+        expect(response).to.be.equal(myHandler(myMessage));
+
+        expect(context.logger).to.equal(undefined);
+    });
+
 });
