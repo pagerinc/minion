@@ -34,8 +34,8 @@
     "mri": "1.x"
   },
   "devDependencies": {
-    "@hapi/code": "8.x",
-    "@hapi/lab": "24.x",
+    "@hapi/code": "9.x",
+    "@hapi/lab": "25.x",
     "@pager/eslint-config": "1.x",
     "@pager/semantic-release-config": "2.x",
     "eslint": "7.x",
