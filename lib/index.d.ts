@@ -43,10 +43,9 @@ declare module '@pager/minion' {
         start: () => void
     }
 
-    declare function createMinion(settings?: Settings, settingsOverride?: Settings): Publisher;
+    function createMinion(settings?: Settings, settingsOverride?: Settings): Publisher;
 
-    declare function createMinion(handler: HandlerFn, settingsOverride?: Settings): Service;
+    function createMinion(handler: HandlerFn, settingsOverride?: Settings): Service;
 
-    export = createMinion;
-
-};
+    export default createMinion;
+}
