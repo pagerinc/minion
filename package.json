@@ -1,5 +1,6 @@
 {
   "name": "@pager/minion",
+  "private": true,
   "version": "3.8.1",
   "description": "Microservice Framework for RabbitMQ Workers",
   "main": "./lib/index.js",
