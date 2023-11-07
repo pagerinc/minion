@@ -38,7 +38,7 @@
     "@hapi/lab": "24.x",
     "@pager/eslint-config": "1.x",
     "@pager/semantic-release-config": "2.x",
-    "eslint": "7.x",
+    "eslint": "8.x",
     "eslint-plugin-import": "2.x",
     "semantic-release": "21.x"
   },
