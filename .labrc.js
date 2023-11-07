@@ -5,5 +5,6 @@ module.exports = {
     'coverage-exclude': ['bin'],
     lint: true,
     threshold: 100,
-    verbose: true
+    verbose: true,
+    globals: 'Symbol(undici.globalDispatcher.1)'
 };

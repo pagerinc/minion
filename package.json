@@ -33,14 +33,19 @@
     "debug": "4.x",
     "mri": "1.x"
   },
+  "peerDependencies": {
+    "pino": "^8.0.0"
+  },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@hapi/code": "8.x",
     "@hapi/lab": "24.x",
-    "@pager/eslint-config": "1.x",
+    "@pager/eslint-config": "^1.4.0",
     "@pager/semantic-release-config": "2.x",
-    "eslint": "7.x",
+    "eslint": "^8.42.0",
     "eslint-plugin-import": "2.x",
-    "semantic-release": "21.x"
+    "semantic-release": "21.x",
+    "sinon": "^15.1.0"
   },
   "renovate": {
     "extends": [
