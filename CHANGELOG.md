@@ -1,3 +1,10 @@
+## [3.9.1](https://github.com/pagerinc/minion/compare/v3.9.0...v3.9.1) (2023-11-14)
+
+
+### Bug Fixes
+
+* cut new version ([#539](https://github.com/pagerinc/minion/issues/539)) ([4f65ce9](https://github.com/pagerinc/minion/commit/4f65ce910ad6f8b91d72ba4e2c22c7aa6292af6c))
+
 # [3.9.0](https://github.com/pagerinc/minion/compare/v3.8.1...v3.9.0) (2023-11-14)
 
 
