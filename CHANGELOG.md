@@ -1,3 +1,15 @@
+# [3.9.0](https://github.com/pagerinc/minion/compare/v3.8.1...v3.9.0) (2023-11-14)
+
+
+### Bug Fixes
+
+* **LOKI-466:** New version ([#536](https://github.com/pagerinc/minion/issues/536)) ([55bc552](https://github.com/pagerinc/minion/commit/55bc552bd9cb3f3d42de63c1e171810af83540b7))
+
+
+### Features
+
+* **LOKI-466:** Implementing semantic-release ([#535](https://github.com/pagerinc/minion/issues/535)) ([799ee68](https://github.com/pagerinc/minion/commit/799ee68a08b5539807ea0be8979f86449fe8dfac))
+
 ## [3.8.1](https://github.com/pagerinc/minion/compare/v3.8.0...v3.8.1) (2023-06-05)
 
 
