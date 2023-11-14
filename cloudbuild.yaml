@@ -1,7 +1,7 @@
 steps:
   - id: docker-compose
-    name: docker/compose:alpine-1.29.1
-    args: ['up', '-d']
+    name: gcr.io/cloud-builders/docker
+    args: ['compose', 'up', '-d', '--wait']
     waitFor: ['-']
 
   - id: npm-install
@@ -47,7 +47,6 @@ availableSecrets:
   secretManager:
     - versionName: projects/145393225073/secrets/npm-token-publish/versions/latest
       env: NPM_TOKEN
-
 
 options:
   machineType: E2_HIGHCPU_8
