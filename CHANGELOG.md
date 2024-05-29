@@ -1,3 +1,10 @@
+## [3.9.2](https://github.com/pagerinc/minion/compare/v3.9.1...v3.9.2) (2024-05-29)
+
+
+### Bug Fixes
+
+* **LOKI-1813:** add return statement to help New Relic ([#540](https://github.com/pagerinc/minion/issues/540)) ([234947d](https://github.com/pagerinc/minion/commit/234947dafc89eb348693ee5d2b95785e768a6a93))
+
 ## [3.9.1](https://github.com/pagerinc/minion/compare/v3.9.0...v3.9.1) (2023-11-14)
 
 
