@@ -28,7 +28,7 @@ steps:
     waitFor: ['npm-ci', 'docker-compose']
 
   - id: npm-publish
-    name: 'gcr.io/$PROJECT_ID/cloudbuilders/npm:6.13.4'
+    name: 'us-east1-docker.pkg.dev/$PROJECT_ID/cloudbuilders/npm:6.13.4'
     secretEnv: ['NPM_TOKEN']
     env:
       - 'TAG_NAME=$TAG_NAME'
